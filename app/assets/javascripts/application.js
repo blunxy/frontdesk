@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require express_check_in_typeahead
+//= require twitter/typeahead.min
 //= require_tree .

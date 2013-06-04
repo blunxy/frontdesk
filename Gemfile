@@ -10,16 +10,18 @@ gem 'thin'
 gem 'jquery-rails', '2.0.2'
 gem 'brakeman'
 gem 'figaro'
+gem 'twitter-typeahead-rails'
 
 group :development, :test do
   gem 'rspec-rails', '2.11.0'
   gem 'sextant'
   gem 'valid_attribute'
   gem 'rspec-given'
+  gem 'poltergeist', '~> 1.2'
 end
 
 group :test do
-  gem 'capybara', '1.1.2'
+  gem 'capybara', '~> 2.1'
   gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner'
 end
