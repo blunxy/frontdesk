@@ -1,7 +1,7 @@
-require 'services/typeahead_prefetch_template'
+require 'services/express_check_in/typeahead/prefetch_datum'
 
 
-describe TypeaheadPrefetchTemplate do
+describe ExpressCheckIn::Typeahead::PrefetchDatum do
 
   Given(:current_attendee) do
     stub(:first_name => "Bob",
@@ -9,20 +9,16 @@ describe TypeaheadPrefetchTemplate do
          :email => "bh@example.com")
   end
 
-  Given(:templated_attendee) do
-    TypeaheadPrefetchTemplate.new(current_attendee)
-  end
-
-  Given(:parsed_template) do
-    JSON.parse(templated_attendee.to_json)
+  Given(:attendee_datum) do
+    ExpressCheckIn::Typeahead::PrefetchDatum.new(current_attendee)
   end
 
 
-  Then { parsed_template["value"].should == "Bob Hope" }
-  Then { parsed_template["email"].should == "bh@example.com" }
-  Then { parsed_template["tokens"].should include("bob") }
-  Then { parsed_template["tokens"].should include("hope") }
-  Then { parsed_template["tokens"].should include("bh") }
-  Then { parsed_template["tokens"].should include("example") }
+  Then { attendee_datum["value"].should == "Bob Hope" }
+  Then { attendee_datum["email"].should == "bh@example.com" }
+  Then { attendee_datum["tokens"].should include("bob") }
+  Then { attendee_datum["tokens"].should include("hope") }
+  Then { attendee_datum["tokens"].should include("bh") }
+  Then { attendee_datum["tokens"].should include("example") }
 
 end

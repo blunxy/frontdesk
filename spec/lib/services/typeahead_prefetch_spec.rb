@@ -13,6 +13,8 @@ describe TypeaheadPrefetch do
     TypeaheadPrefetch.create_from(current_attendees)
   }
 
+
+
   Then { prefetch.should == [
                              {
                                value: 'Bob Hope',
