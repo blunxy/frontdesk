@@ -42,17 +42,12 @@ module ExpressCheckIn
         @hash["email"] = @attendee.email
       end
 
-
-      def email_match
-        @attendee.email.match(/\A(\w+)@(\w+)\./)
-      end
-
       def email_prefix
-        email_match[1]
+        @attendee.email.match(/\A(\w+)@/)[1]
       end
 
       def email_suffix
-        email_match[2]
+        @attendee.email.match(/@(\w+)\./)[1]
       end
 
 
