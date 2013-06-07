@@ -1,17 +1,16 @@
+require_relative 'prefetch_datum_builder'
+
 module ExpressCheckIn
 
   module Typeahead
 
-    class Prefetch
+    module Prefetch
 
-      def initialize(current_attendees)
-        @attendees = current_attendees
-      end
+      extend self
 
-
-      def generate
-        @attendees.collect do |attendee|
-          PrefetchDatum.new(attendee)
+      def build_from(attendees)
+        attendees.collect do |attendee|
+          PrefetchDatumBuilder.build_from(attendee)
         end
       end
 

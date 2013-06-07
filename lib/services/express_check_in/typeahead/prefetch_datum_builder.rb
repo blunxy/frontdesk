@@ -2,27 +2,23 @@ module ExpressCheckIn
 
   module Typeahead
 
-    class PrefetchDatum
+    module PrefetchDatumBuilder
 
-      attr_reader :hash
+      extend self
 
-      def initialize(attendee)
-        @hash = { }
+      def build_from(attendee)
         @attendee = attendee
         build_hash
       end
 
-      def [](i)
-        @hash[i]
-      end
-
-
       private
 
       def build_hash
+        @hash = { }
         add_full_name_to_hash
         add_tokens_to_hash
         add_email_to_hash
+        @hash
       end
 
       def add_full_name_to_hash

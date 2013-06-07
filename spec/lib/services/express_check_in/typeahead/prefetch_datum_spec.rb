@@ -1,8 +1,8 @@
-require 'services/express_check_in/typeahead/prefetch_datum'
+require 'services/express_check_in/typeahead/prefetch_datum_builder'
 
 module ExpressCheckIn::Typeahead
 
-  describe PrefetchDatum do
+  describe PrefetchDatumBuilder do
 
     Given(:current_attendee) do
       stub(:first_name => "Bob",
@@ -10,14 +10,16 @@ module ExpressCheckIn::Typeahead
            :email => "bh@example.com")
     end
 
-    Given(:attendee_datum) { PrefetchDatum.new(current_attendee) }
+    When(:datum) do
+      PrefetchDatumBuilder.build_from(current_attendee)
+    end
 
-    Then { attendee_datum["value"].should == "Bob Hope" }
-    Then { attendee_datum["email"].should == "bh@example.com" }
-    Then { attendee_datum["tokens"].should include("bob") }
-    Then { attendee_datum["tokens"].should include("hope") }
-    Then { attendee_datum["tokens"].should include("bh") }
-    Then { attendee_datum["tokens"].should include("example") }
+    Then { datum["value"].should == "Bob Hope" }
+    Then { datum["email"].should == "bh@example.com" }
+    Then { datum["tokens"].should include("bob") }
+    Then { datum["tokens"].should include("hope") }
+    Then { datum["tokens"].should include("bh") }
+    Then { datum["tokens"].should include("example") }
 
   end
 

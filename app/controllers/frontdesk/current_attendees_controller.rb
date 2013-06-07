@@ -1,15 +1,17 @@
-require 'services/typeahead_formatter'
+require 'services/express_check_in/typeahead/prefetch'
+require 'services/express_check_in'
 
 class Frontdesk::CurrentAttendeesController < ApplicationController
 
   def index
-
   end
 
-  def foos
-    render :json => TypeaheadFormatter.prefetch
+  def prefetch
+    prefetch =
+      ExpressCheckIn::Typeahead::Prefetch.
+      build_from(ExpressCheckIn.eligible_members).
+      to_json
+    render :json => prefetch
   end
-
-
 
 end

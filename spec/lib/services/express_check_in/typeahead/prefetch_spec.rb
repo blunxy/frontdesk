@@ -1,5 +1,5 @@
 require 'services/express_check_in/typeahead/prefetch'
-require 'services/express_check_in/typeahead/prefetch_datum'
+require 'services/express_check_in/typeahead/prefetch_datum_builder'
 
 module ExpressCheckIn::Typeahead
 
@@ -14,14 +14,11 @@ module ExpressCheckIn::Typeahead
                                       :email => "jd@example.com")
                                 ]}
 
-    Given(:prefetch) { Prefetch.new(current_attendees) }
-
     Then do
-      PrefetchDatum.should_receive(:new).exactly(2).times
-      prefetch.generate
+      PrefetchDatumBuilder.should_receive(:build_from).
+        exactly(2).times
+      Prefetch.build_from(current_attendees)
     end
-
-    Then {  prefetch.generate.size.should == 2 }
 
   end
 

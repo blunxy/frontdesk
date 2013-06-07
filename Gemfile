@@ -13,11 +13,12 @@ gem 'figaro'
 gem 'twitter-typeahead-rails'
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails', '2.13.0'
   gem 'sextant'
   gem 'valid_attribute'
   gem 'rspec-given'
   gem 'poltergeist', '~> 1.2'
+  gem 'selenium-webdriver'
 end
 
 group :test do
