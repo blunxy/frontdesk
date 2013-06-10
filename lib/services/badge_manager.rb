@@ -1,13 +1,13 @@
 class BadgeManager
 
-  def initialize(conference, cutoff_time)
-    @conference = conference
+  def initialize(convention, cutoff_time)
+    @convention = convention
     @cutoff_time = cutoff_time
   end
 
 
-  def bulk_badged_members
-    @conference.attendees.select do |attendee|
+  def pre_badged_members
+    @convention.attendees.select do |attendee|
       attendee.badge.printed_before?(@cutoff_time)
     end
 

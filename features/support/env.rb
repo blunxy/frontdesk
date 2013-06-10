@@ -10,7 +10,7 @@ require 'cucumber/rspec/doubles'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-                                    :js_errors => true,
+                                    :js_errors => false,
                                     :inspector => true)
 end
 
@@ -63,3 +63,11 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
+
+# If you're doing something javascript-y, you may have crud left in your
+# browser's localstorage - clear it out.
+After('@javascript') do |scenario|
+  Rails.logger.debug "@@ Clearing localstorage"
+  page.execute_script 'localStorage.clear()'
+end

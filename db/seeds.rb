@@ -5,3 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Attendee.create(:first_name => "Jordan",
+                :last_name => "Pratt",
+                :email => "blunxy@gmail.com")
+Attendee.create(:first_name => "John",
+                :last_name => "Mortimer",
+                :email => "foo@example.com")
+Attendee.create(:first_name => "Squirtle",
+                :last_name => "Peeka",
+                :email => "sp@jooble.com")

@@ -10,6 +10,7 @@ end
 
 
 Given(/^an attendee "(.*?)" with email "(.*?)"$/) do |full_name, email|
+
   Attendee.create(:first_name => first_name(full_name),
                   :last_name => last_name(full_name),
                   :email => email)
@@ -48,8 +49,7 @@ When(/^I search for "(.*?)"$/) do |search_term|
 
 end
 
-Then(/^the dropdown should contain all attendees with matching names and
-emails$/) do
+Then(/^the dropdown should contain all attendees with matching names and emails$/) do
   #p page.html
   @emails_to_match.each do  |email|
     page.source.should have_css('p', :text => email)
@@ -57,6 +57,7 @@ emails$/) do
   @full_names_to_match.each do |name|
     page.source.should have_css('p', :text => name)
   end
+
 end
 
 Then(/^the dropdown should not contain any of the other attendees$/) do
@@ -69,21 +70,33 @@ Then(/^the dropdown should not contain any of the other attendees$/) do
 end
 
 Given(/^a pre\-badged attendee "(.*?)" with email "(.*?)"$/) do |name, email|
+  #page.execute_script %Q{  window.localStorage.clear(); }
   attendee = Attendee.create(:first_name => first_name(name),
-                  :last_name => last_name(name),
-                  :email => email)
-  conference = stub
-  BadgeManager.new(conference).preprint_badge_for(attendee)
+                             :last_name => last_name(name),
+                             :email => email)
+  attendee.stub_chain(:badge, :printed_before?).and_return(true)
 end
 
-Given(/^attendee "(.*?)" with email "(.*?)" who missed the cutoff$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Given(/^attendee "(.*?)" with email "(.*?)" who's not pre-badged$/) do |name, email|
+  attendee = Attendee.create(:first_name => first_name(name),
+                             :last_name => last_name(name),
+                             :email => email)
+  attendee.stub_chain(:badge, :printed_before?).and_return(false)
 end
 
-Then(/^the dropdown should contain "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^the dropdown should contain "(.*?)"$/) do |name|
+  #p page.html
+  page.source.should have_css('p', :text => name)
 end
 
-Then(/^the dropdown should not contain "(.*?)"$/) do |arg1|
+Then(/^the dropdown should not contain "(.*?)"$/) do |name|
+  page.source.should_not have_css('p', :text => name)
+end
+
+Given(/^a not\-registered attendee "(.*?)" with email "(.*?)"$/) do |name, email|
+
+end
+
+Then(/^the dropdown should contain "(.*?)" marked as not registered$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end

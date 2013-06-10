@@ -11,13 +11,19 @@ Feature:
   of the email before the '@' and the portion of the email after the '@' and
   before the final '.' These matches are case-insensitive.
 
-  The only attendee info that should show up is for those attendees who have
-  had their badges pre-printed. (So if they have registered *after* the bulk
-  print date, they won't show up.)
+  Attendees who have not registered yet should be tagged as <Not Registered>
+  in the dropdown.
 
-  If the attendee has made any changes to their schedule or pass type since the
-  bulk print, a warning must be shown so the front desk staff can tell them to
-  get out of the express check-in.
+  Attendees who have registered *after* the bulk print time should be tagged
+  as <Needs Badge> in the dropdown.
+
+  Attendees who have made any changes that effects their pass (for example,
+  to their schedule or chosen type of pass) should be tagged as <Badge Changed>
+  in the dropdown.
+
+  Otherwise, the attendee should be tagged as <OK> in the dropdown.
+
+
 
 @javascript
 Scenario:
@@ -34,11 +40,11 @@ Scenario:
   And the dropdown should not contain any of the other attendees
 
 
+
 @javascript
 Scenario:
-  Only folks who have a pre-printed badge should show up in the dropdown.
-  Given a pre-badged attendee "Bart Simpson" with email "bs@groenig.com"
-  And attendee "Lisa Simpson" with email "ls@groenig.com" who missed the cutoff
-  When I search for "simpson"
-  Then the dropdown should contain "Bart Simpson"
-  And the dropdown should not contain "Lisa Simpson"
+  Not-registered folks should be tagged as Not Registered in the dropdown.
+
+  Given a not-registered attendee "Bart Simpson" with email "bs@groenig.com"
+  When I search for "si"
+  Then the dropdown should contain "Bart Simpson" marked as not registered
