@@ -2,8 +2,8 @@ module ExpressCheckIn
 
   extend self
 
-  def eligible_members
-    []
+  def eligible_members(convention)
+    convention.attendees || []
   end
 
 

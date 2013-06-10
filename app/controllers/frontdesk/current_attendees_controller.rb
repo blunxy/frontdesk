@@ -7,10 +7,14 @@ class Frontdesk::CurrentAttendeesController < ApplicationController
   end
 
   def prefetch
+    eligible_members =
+      ExpressCheckIn.eligible_members(Convention.current)
+
     prefetch =
       ExpressCheckIn::Typeahead::Prefetch.
-      build_from(ExpressCheckIn.eligible_members).
+      build_from(eligible_members).
       to_json
+
     render :json => prefetch
   end
 
